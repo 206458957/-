@@ -20,6 +20,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "dma.h"
+#include "i2c.h"
 #include "spi.h"
 #include "tim.h"
 #include "usart.h"
@@ -33,6 +34,7 @@
 #include "stdlib.h"
 #include "SerialDebug.h"
 #include "Chassis.h"
+#include "controler.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -52,7 +54,11 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-
+ PID_t Motor_pid; //声明PID数据结构体	
+ const Motor_t *motor_date; //声明电机结构体指针
+ int set_speed = 0 ; //目标速度
+	
+ const float PID[3] = {15000 , 10 , 0 }; //P  I  D
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -100,6 +106,7 @@ int main(void)
   MX_SPI1_Init();
   MX_TIM3_Init();
   MX_TIM2_Init();
+  MX_I2C2_Init();
   /* USER CODE BEGIN 2 */
   HAL_TIM_PWM_Start(&htim2 ,TIM_CHANNEL_3 );
   HAL_TIM_PWM_Start(&htim2 ,TIM_CHANNEL_4 );
@@ -113,6 +120,7 @@ int main(void)
   delay_ms(500);
   PS2_SetInit();
   Chassis_Init(); 
+  PID_Init(&Motor_pid, PID);
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -126,7 +134,8 @@ int main(void)
 	 PS2_Receive();
 	 delay_ms (1);
 	 Chassis_Control ();
-//	 PS2_SerialDebug();
+	 //	  PID_Update(&Motor_pid , )  //待思考
+
   }
   /* USER CODE END 3 */
 }

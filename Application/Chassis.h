@@ -22,9 +22,15 @@ typedef struct
 	float Vx;
 	float Vy;
 	float Vw;
-	Motor_t ChassisMotor[4];
 	
+	float VxTransfer;
+	float VyTransfer;
+	
+	Motor_t ChassisMotor[4];
+	float V1,V2,V3,V4;
+
 }Chassis_t;
+
 
 extern Chassis_t Chassis;
 
