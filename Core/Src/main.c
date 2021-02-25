@@ -120,7 +120,7 @@ int main(void)
   delay_ms(500);
   PS2_SetInit();
   Chassis_Init(); 
-  PID_Init(&Motor_pid, PID);
+  //PID_Init(&Motor_pid, float Kp , float Ki , float Kd , float limMax , float limMin , float T , float tau);
   /* USER CODE END 2 */
 
   /* Infinite loop */
